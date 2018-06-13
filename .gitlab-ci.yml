@@ -1,0 +1,55 @@
+variables:
+  CONTAINER_TEST_IMAGE: $CI_REGISTRY_IMAGE:$CI_BUILD_REF_NAME
+  CONTAINER_RELEASE_IMAGE: $CI_REGISTRY_IMAGE:latest
+  DEPLOYMENT_SERVER: docker@18.219.191.43
+
+before_script:
+  - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN $CI_REGISTRY
+
+stages:
+  - build
+  - test
+  - release-image
+  - deploy
+
+build:
+  stage: build
+  script:
+    - docker build --cache-from $CONTAINER_TEST_IMAGE --pull -t $CONTAINER_TEST_IMAGE .
+    - docker push $CONTAINER_TEST_IMAGE
+
+test:
+  stage: test
+  script:
+    - docker-compose -f docker-compose-ci-test.yml up --exit-code-from depository-ums
+
+release-image:
+  stage: release-image
+  script:
+    - docker pull $CONTAINER_TEST_IMAGE
+    - docker tag $CONTAINER_TEST_IMAGE $CONTAINER_RELEASE_IMAGE
+    - docker push $CONTAINER_RELEASE_IMAGE
+  only:
+    - master
+
+deploy:
+  stage: deploy
+  script:
+    - scp docker-compose.yml $DEPLOYMENT_SERVER:/home/docker/docker-compose.yml
+    - ssh $DEPLOYMENT_SERVER
+    - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN $CI_REGISTRY
+    - docker swarm init || echo "Swarm has already been initialized"
+    - (echo $API_SECRET | docker secret create API_SECRET -) || echo "API_SECRET exists. Continuing ..."
+    - (echo $FACEBOOK_CLIENT_ID | docker secret create FB_CLIENT_ID -) || echo "FB Client ID exists. Continuing ..."
+    - (echo $FACEBOOK_CLIENT_SECRET | docker secret create FB_CLIENT_SECRET -) || echo "FB Client Secret exists. Continuing ..."
+    - (echo $GOOGLE_CLIENT_ID | docker secret create GOOGLE_CLIENT_ID -) || echo "Google Client Id exists. Continuing ..."
+    - (echo $GOOGLE_CLIENT_SECRET | docker secret create GOOGLE_CLIENT_SECRET -) || echo "Google Client Secret exists. Continuing ..."
+    - (echo $WHITELISTER_PRIVATE_KEY | docker secret create WHITELISTER_PRIVATE_KEY -) || echo "Whitelister Private key exists. Continuing ..."
+    - (echo $MERCHANT_ID_4STOP | docker secret create MERCHANT_ID_4STOP -) || echo "Merchant Id exists. Continuing ..."
+    - (echo $MERCHANT_PASS_4STOP | docker secret create MERCHANT_PASS_4STOP -) || echo "Merchant Pass exists. Continuing..."
+    - (echo $JWT_EMAIL_CONFIG | docker secret create JWT_EMAIL_CONFIG -) || echo "JWT Email Config exists. Continuing ..."
+    - (echo $EMAIL_SERVICE_LOGIN | docker secret create EMAIL_SERVICE_LOGIN -) || echo "Email Service Login exists. Continuing ..."
+    - (echo $EMAIL_SERVICE_PASSW | docker secret create EMAIL_SERVICE_PASSW -) || echo "Email Service Passw exists. Continuing"
+    - docker stack deploy --with-registry-auth -c docker-compose.yml dn-ums
+  only:
+    - master

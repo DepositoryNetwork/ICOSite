@@ -1,0 +1,7 @@
+{
+  "blockchain": {
+    "network": "ropsten",
+    "infura_api_key": "BU88vVanV6hLdd9qPCPW",
+    "depo_crowdsale_contract_address": "0xa585df3406ec2558a19d5c9a6dfef6c4c7cfd024"
+  }
+}

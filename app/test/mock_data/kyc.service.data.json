@@ -1,0 +1,118 @@
+{
+    "user_unprocessed2processed": {
+        "user_name": "user_unprocessed",
+        "uuid": "1",
+        "ethereumWallet": "1",
+        "status": "unprocessed",
+        "request_origin": "127.0.0.1",
+        "kycIDs": ["kyc1"],
+        "retryCount": 0
+    },
+    "user_processing2processing_docs": {
+        "user_name": "user_processing1",
+        "uuid": "2",
+        "ethereumWallet": "2",
+        "status": "processing",
+        "request_origin": "127.0.0.2",
+        "kycIDs": ["kyc2"],
+        "retryCount": 0
+    },
+    "user_processing2rejected": {
+        "user_name": "user_processing2",
+        "uuid": "3",
+        "ethereumWallet": "3",
+        "status": "processing",
+        "request_origin": "127.0.0.3",
+        "kycIDs": ["kyc3"]
+    },
+    "user_processing_docs2approved": {
+        "user_name": "user_processing_docs2",
+        "uuid": "5",
+        "ethereumWallet": "5",
+        "status": "processing_docs",
+        "request_origin": "127.0.0.5",
+        "kycIDs": ["kyc5"]
+    },
+    "user_rejected2processing_completed": {
+        "user_name": "user_rejected1",
+        "uuid": "6",
+        "ethereumWallet": "6",
+        "status": "kyc_rejected",
+        "request_origin": "127.0.0.6",
+        "kycIDs": ["kyc6"]
+    },
+    "user_approved2processing_completed": {
+        "user_name": "user_approved1",
+        "uuid": "7",
+        "ethereumWallet": "7",
+        "status": "kyc_approved",
+        "request_origin": "127.0.0.7",
+        "kycIDs": ["kyc7"]
+    },
+    "user_any2failed2completed": {
+        "user_name": "user_any2completed",
+        "uuid": "8",
+        "ethereumWallet": "8",
+        "status": "processing",
+        "request_origin": "127.0.0.8",
+        "kycIDs": ["kyc8"]
+    },
+    "user_notifying2rejected": {
+        "user_name": "user_notifying2rejected",
+        "uuid": "10",
+        "ethereumWallet": "10",
+        "status": "notifying_user",
+        "request_origin": "127.0.0.10"
+    },
+    "user_notifying2approved": {
+        "user_name": "user_notifying2approved",
+        "uuid": "12",
+        "ethereumWallet": "12",
+        "status": "notifying_user",
+        "request_origin": "127.0.0.12",
+        "kycIDs": ["kyc12"]
+    },
+    "user_processing2unprocessed": {
+        "user_name": "user_processing2unprocessed",
+        "uuid": "11",
+        "ethereumWallet": "11",
+        "status": "processing",
+        "request_origin": "127.0.0.11",
+        "kycIDs": ["kyc11"]
+    },
+    "user_processing_docs2unprocessed": {
+        "user_name": "user_processing2unprocessed",
+        "uuid": "13",
+        "ethereumWallet": "13",
+        "status": "processing_docs",
+        "request_origin": "127.0.0.13",
+        "kycIDs": ["kyc13"]
+    },
+    "user_delayed1": {
+        "user_name": "user_delayed1",
+        "uuid": "14",
+        "ethereumWallet": "14",
+        "status": "processing",
+        "request_origin": "127.0.0.14",
+        "kycIDs": ["kyc14"],
+        "retryCount": 10
+    },
+    "user_delayed2": {
+        "user_name": "user_delayed2",
+        "uuid": "15",
+        "ethereumWallet": "15",
+        "status": "notifying_user",
+        "request_origin": "127.0.0.15",
+        "kycIDs": ["kyc15"],
+        "retryCount": 10
+    },
+    "user_notdelayed1": {
+        "user_name": "user_notdelayed1",
+        "uuid": "16",
+        "ethereumWallet": "16",
+        "status": "processing_docs",
+        "request_origin": "127.0.0.16",
+        "kycIDs": ["kyc16"],
+        "retryCount": 9
+    }
+}

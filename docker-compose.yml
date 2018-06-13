@@ -1,0 +1,106 @@
+version: "3.3"
+services:
+  depository-ums:
+    image: registry.gitlab.com/centroidagitlab/depositorynetwork
+    secrets:
+      - API_SECRET
+      - FB_CLIENT_ID
+      - FB_CLIENT_SECRET
+      - GOOGLE_CLIENT_ID
+      - GOOGLE_CLIENT_SECRET
+      - WHITELISTER_PRIVATE_KEY
+      - MERCHANT_ID_4STOP
+      - MERCHANT_PASS_4STOP
+      - JWT_EMAIL_CONFIG
+      - EMAIL_SERVICE_LOGIN
+      - EMAIL_SERVICE_PASSW
+    environment:
+      - API_SECRET=/run/secrets/API_SECRET
+      - FACEBOOK_CLIENT_ID=/run/secrets/FB_CLIENT_ID
+      - FACEBOOK_CLIENT_SECRET=/run/secrets/FB_CLIENT_SECRET
+      - GOOGLE_CLIENT_ID=/run/secrets/GOOGLE_CLIENT_ID
+      - GOOGLE_CLIENT_SECRET=/run/secrets/GOOGLE_CLIENT_SECRET
+      - WHITELISTER_PRIVATE_KEY=/run/secrets/WHITELISTER_PRIVATE_KEY
+      - MERCHANT_ID_4STOP=/run/secrets/MERCHANT_ID_4STOP
+      - MERCHANT_PASS_4STOP=/run/secrets/MERCHANT_PASS_4STOP
+      - JWT_EMAIL_CONFIG=/run/secrets/JWT_EMAIL_CONFIG
+      - EMAIL_SERVICE_LOGIN=/run/secrets/EMAIL_SERVICE_LOGIN
+      - EMAIL_SERVICE_PASSW=/run/secrets/EMAIL_SERVICE_PASSW
+      - MONGODB_CONNECTION_STRING=mongodb://mongo:27017/ums
+      - EMAIL_SERVICE_HOST=https://dn-ums-externalloa-1xeyfmpgq8bfh-513428143.us-east-2.elb.amazonaws.com:3000
+    ports:
+      - 3000:3000
+    networks:
+      - depository-net
+    depends_on:
+      - mongo
+    command: npm run start
+    deploy:
+      replicas: 2
+      update_config:
+        parallelism: 1
+        delay: 10s
+      restart_policy:
+        condition: on-failure
+
+  depository-batchsrv:
+    image: registry.gitlab.com/centroidagitlab/depositorynetwork
+    environment:
+      - MONGODB_CONNECTION_STRING=mongodb://mongo:27017/ums
+    networks:
+      - depository-net
+    depends_on:
+      - mongo
+    command: npm run startBatch
+    deploy:
+      replicas: 1
+      update_config:
+        parallelism: 1
+        delay: 10s
+      restart_policy:
+        condition: on-failure
+  
+  mongo:
+    image: mongo
+    volumes:
+      - db-data:/data/db
+    ports:
+      - "27017"
+    networks:
+      - depository-net
+    deploy:
+      restart_policy:
+        condition: on-failure
+
+secrets:
+  API_SECRET:
+    external: true
+  FB_CLIENT_ID:
+    external: true
+  FB_CLIENT_SECRET:
+    external: true
+  GOOGLE_CLIENT_ID:
+    external: true
+  GOOGLE_CLIENT_SECRET:
+    external: true
+  WHITELISTER_PRIVATE_KEY:
+    external: true
+  MERCHANT_ID_4STOP:
+    external: true
+  MERCHANT_PASS_4STOP:
+    external: true
+  JWT_EMAIL_CONFIG:
+    external: true
+  EMAIL_SERVICE_LOGIN:
+    external: true
+  EMAIL_SERVICE_PASSW:
+    external: true
+
+networks:
+  depository-net:
+
+volumes:
+  db-data:
+    driver: "cloudstor:aws"
+    driver_opts:
+      perfmode: maxio

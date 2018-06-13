@@ -1,0 +1,52 @@
+{
+    // Use IntelliSense to learn about possible Node.js debug attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "node",
+            "request": "launch",
+            "name": "Local Debugging",
+            "program": "${workspaceRoot}/dist/src/main.js",
+            "smartStep": true,
+            "outFiles": [
+                "../dist/**/*.js"
+            ],
+            "preLaunchTask": "npm: build",
+            "protocol": "inspector"
+        },
+        {
+            "type": "node",
+            "request": "attach",
+            "name": "Remote Debugging",
+            "port":9229,
+            "localRoot": "${workspaceFolder}/dist/src",
+            "remoteRoot": "/app/dist/src",
+            "protocol":"inspector"
+        },
+        {
+            "type": "node",
+            "request": "attach",
+            "name": "Debug Server",
+            "port":9229,
+            "timeout": 60000,
+            "localRoot": "${workspaceFolder}/dist/src",
+            "remoteRoot": "/app/dist/src",
+            "protocol":"inspector",
+            "preLaunchTask": "launch-srv-container"
+        },
+        {
+            "type": "node",
+            "request": "attach",
+            "name": "Debug Batch",
+            "port":9229,
+            "timeout": 60000,
+            "localRoot": "${workspaceFolder}/dist/src",
+            "remoteRoot": "/app/dist/src",
+            "protocol":"inspector",
+            "preLaunchTask": "launch-batch-container"
+        }
+    ]
+}
+

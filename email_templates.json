@@ -1,0 +1,10 @@
+{
+	"welcomeClassic": "<h1>Welcome!</h1><p>Thank you for joining Depository Network!<br>Do not hesistate to contact us with any questions you may have</p>",
+	"kycSuccess": "<p>Your Ethereum wallet has been successfully verified and whitelisted!</p>",
+	"kycFailure": "<p>Identity verification procedure failed! Try again later.</p>",
+	"confirmationRequest": {
+	        "url": "https://{host}/api/user/verify-email?token={token}",
+	        "content":"<h2>Hi! Please <a target=_blank href='{confirmationURL}'>confirm your email</a> to verify your account</h2>"
+	},
+	"confirmationResponse": "<h1>Congratulations!</h1><p>Your email was successfully confirmed.</p>"
+}

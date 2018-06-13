@@ -1,0 +1,22 @@
+{
+    "whitelistPair": { "ethereumWallet": "a001", "kycId": "b001" },
+    "whitelistBufferForRetry": [
+        { "ethereumWallet": "c001", "kycId": "d001", "status": "processing", "retryCount": 10 },
+        { "ethereumWallet": "c002", "kycId": "d002", "status": "processing", "retryCount": 0 },
+        { "ethereumWallet": "c003", "kycId": "d003", "status": "processing", "retryCount": 3 },
+        { "ethereumWallet": "c004", "kycId": "d004", "status": "unprocessed", "retryCount": 9 },
+        { "ethereumWallet": "c005", "kycId": "d005", "status": "unprocessed", "retryCount": 10 }
+    ],
+    "whitelistBuffer": [
+        { "ethereumWallet": "c001", "kycId": "d001", "status": "processing", "retryCount": 10 },
+        { "ethereumWallet": "c002", "kycId": "d002", "status": "processing", "retryCount": 0 },
+        { "ethereumWallet": "c003", "kycId": "d003", "status": "processing", "retryCount": 3 },
+        { "ethereumWallet": "c004", "kycId": "d004", "status": "unprocessed", "retryCount": 9 },
+        { "ethereumWallet": "c005", "kycId": "d005", "status": "unprocessed", "retryCount": 0 }
+    ],
+    "unprocessedWhitelistBuffer": [
+        { "ethereumWallet": "c101", "kycId": "d101", "status": "unprocessed", "retryCount": 9 },
+        { "ethereumWallet": "c102", "kycId": "d102", "status": "unprocessed", "retryCount": 0 },
+        { "ethereumWallet": "c103", "kycId": "d103", "status": "unprocessed", "retryCount": 3 }
+    ]
+}

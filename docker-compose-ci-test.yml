@@ -1,0 +1,36 @@
+version: "3.4"
+services:
+  depository-ums:
+    container_name: dn-ums
+    image: $CONTAINER_TEST_IMAGE
+    environment:
+      - MONGODB_TEST_CONNECTION_STRING=mongodb://mongo:27017/ums_test
+      - API_SECRET=$API_SECRET
+      - FACEBOOK_CLIENT=$FACEBOOK_CLIENT
+      - FACEBOOK_CLIENT_SECRET=$FACEBOOK_CLIENT_SECRET
+      - GOOGLE_CLIENT_ID=$GOOGLE_CLIENT_ID
+      - GOOGLE_CLIENT_SECRET=$GOOGLE_CLIENT_SECRET
+      - WHITELISTER_PRIVATE_KEY=$WHITELISTER_PRIVATE_KEY
+      - MERCHANT_ID_4STOP=$MERCHANT_ID_4STOP
+      - MERCHANT_PASS_4STOP=$MERCHANT_PASS_4STOP
+      - JWT_EMAIL_CONFIG=$JWT_EMAIL_CONFIG
+      - EMAIL_SERVICE_LOGIN=$EMAIL_SERVICE_LOGIN
+      - EMAIL_SERVICE_PASSW=$EMAIL_SERVICE_PASSW
+    ports:
+      - 3000:3000
+    networks:
+      - depository-net
+    depends_on:
+      - mongo
+    command: npm run test
+    
+  mongo:
+    container_name: dn-mongo
+    image: mongo
+    ports:
+      - "27017"
+    networks:
+      - depository-net
+
+networks:
+  depository-net:
